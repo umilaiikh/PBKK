@@ -1,0 +1,145 @@
+using System;
+using System.Collections.Generic;
+
+class Mahasiswa
+{
+    public string NIM { get; set; }
+    public string Nama { get; set; }
+    public string Prodi { get; set; }
+    public double IPK { get; set; }
+}
+
+class Program
+{
+    static List<Mahasiswa> dataMahasiswa = new List<Mahasiswa>();
+
+    static void Main()
+    {
+        int pilihan;
+
+        do
+        {
+            Console.WriteLine("\n=== DATA MAHASISWA ===");
+            Console.WriteLine("1. Tambah Mahasiswa");
+            Console.WriteLine("2. Lihat Data Mahasiswa");
+            Console.WriteLine("3. Cari Mahasiswa");
+            Console.WriteLine("4. Hapus Mahasiswa");
+            Console.WriteLine("5. Keluar");
+            Console.Write("Pilih menu: ");
+
+            if (!int.TryParse(Console.ReadLine(), out pilihan))
+            {
+                pilihan = 0;
+            }
+
+            switch (pilihan)
+            {
+                case 1:
+                    TambahMahasiswa();
+                    break;
+
+                case 2:
+                    LihatMahasiswa();
+                    break;
+
+                case 3:
+                    CariMahasiswa();
+                    break;
+
+                case 4:
+                    HapusMahasiswa();
+                    break;
+
+                case 5:
+                    Console.WriteLine("Program selesai.");
+                    break;
+
+                default:
+                    Console.WriteLine("Pilihan tidak valid!");
+                    break;
+            }
+
+        } while (pilihan != 5);
+    }
+
+    static void TambahMahasiswa()
+    {
+        Mahasiswa m = new Mahasiswa();
+
+        Console.Write("Masukkan NIM: ");
+        m.NIM = Console.ReadLine();
+
+        Console.Write("Masukkan Nama: ");
+        m.Nama = Console.ReadLine();
+
+        Console.Write("Masukkan Prodi: ");
+        m.Prodi = Console.ReadLine();
+
+        Console.Write("Masukkan IPK: ");
+
+        if (!double.TryParse(Console.ReadLine(), out double ipk) || ipk < 0 || ipk > 4)
+        {
+            Console.WriteLine("IPK harus antara 0 sampai 4!");
+            return;
+        }
+
+        m.IPK = ipk;
+        dataMahasiswa.Add(m);
+
+        Console.WriteLine("Data mahasiswa berhasil ditambahkan!");
+    }
+
+    static void LihatMahasiswa()
+    {
+        if (dataMahasiswa.Count == 0)
+        {
+            Console.WriteLine("Belum ada data mahasiswa.");
+            return;
+        }
+
+        foreach (Mahasiswa m in dataMahasiswa)
+        {
+            Console.WriteLine($"\nNIM: {m.NIM}");
+            Console.WriteLine($"Nama: {m.Nama}");
+            Console.WriteLine($"Prodi: {m.Prodi}");
+            Console.WriteLine($"IPK: {m.IPK}");
+        }
+    }
+
+    static void CariMahasiswa()
+    {
+        Console.Write("Masukkan NIM yang dicari: ");
+        string nim = Console.ReadLine();
+
+        Mahasiswa m = dataMahasiswa.Find(x => x.NIM == nim);
+
+        if (m == null)
+        {
+            Console.WriteLine("Mahasiswa tidak ditemukan.");
+        }
+        else
+        {
+            Console.WriteLine($"Nama: {m.Nama}");
+            Console.WriteLine($"Prodi: {m.Prodi}");
+            Console.WriteLine($"IPK: {m.IPK}");
+        }
+    }
+
+    static void HapusMahasiswa()
+    {
+        Console.Write("Masukkan NIM yang akan dihapus: ");
+        string nim = Console.ReadLine();
+
+        Mahasiswa m = dataMahasiswa.Find(x => x.NIM == nim);
+
+        if (m == null)
+        {
+            Console.WriteLine("Mahasiswa tidak ditemukan.");
+        }
+        else
+        {
+            dataMahasiswa.Remove(m);
+            Console.WriteLine("Data mahasiswa berhasil dihapus!");
+        }
+    }
+}
