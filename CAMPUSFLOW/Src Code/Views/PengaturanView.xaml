@@ -1,0 +1,66 @@
+<UserControl x:Class="CampusFlow.Views.PengaturanView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="760" HorizontalAlignment="Left">
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Informasi Aplikasi" Style="{StaticResource H2}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Nama Aplikasi" Style="{StaticResource MutedText}"/>
+                        <TextBlock Grid.Column="1" Text="CampusFlow" FontWeight="SemiBold"/>
+
+                        <TextBlock Grid.Row="1" Text="Versi" Style="{StaticResource MutedText}" Margin="0,6,0,0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding AppVersion}" FontWeight="SemiBold" Margin="0,6,0,0"/>
+
+                        <TextBlock Grid.Row="2" Text="Runtime" Style="{StaticResource MutedText}" Margin="0,6,0,0"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DotNetVersion}" FontWeight="SemiBold" Margin="0,6,0,0"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Koneksi Database" Style="{StaticResource H2}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Server" Style="{StaticResource MutedText}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Server}" FontWeight="SemiBold"/>
+
+                        <TextBlock Grid.Row="1" Text="Database" Style="{StaticResource MutedText}" Margin="0,6,0,0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Database}" FontWeight="SemiBold" Margin="0,6,0,0"/>
+
+                        <TextBlock Grid.Row="2" Text="Connection String" Style="{StaticResource MutedText}" Margin="0,6,0,0"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ConnectionString}"
+                                   TextWrapping="Wrap" FontFamily="Consolas" FontSize="12" Margin="0,6,0,0"/>
+                    </Grid>
+
+                    <Button Content="Uji Koneksi" Command="{Binding UjiKoneksiCommand}"
+                            HorizontalAlignment="Left" Margin="0,16,0,0"/>
+                    <TextBlock Text="{Binding StatusMessage}" Style="{StaticResource MutedText}" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

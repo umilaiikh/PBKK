@@ -1,0 +1,67 @@
+<UserControl x:Class="CampusFlow.Views.JadwalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="320"/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Margin="0,0,16,0">
+            <Grid DockPanel.Dock="Top" Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+                         Padding="10,8" VerticalContentAlignment="Center"
+                         ToolTip="Cari mata kuliah atau ruang"/>
+                <ComboBox Grid.Column="1" Width="160" Margin="8,0,0,0"
+                          ItemsSource="{Binding FilterHariOptions}" SelectedItem="{Binding FilterHari}"/>
+            </Grid>
+
+            <Border Style="{StaticResource Card}" Padding="0" Margin="0">
+                <Grid>
+                    <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding Selected}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Mata Kuliah" Binding="{Binding MataKuliahNama}" Width="*"/>
+                            <DataGridTextColumn Header="Hari" Binding="{Binding Hari}" Width="100"/>
+                            <DataGridTextColumn Header="Waktu" Binding="{Binding Waktu}" Width="140"/>
+                            <DataGridTextColumn Header="Ruang" Binding="{Binding Ruang}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock Text="Belum ada jadwal. Tambahkan melalui form di kanan."
+                               Style="{StaticResource MutedText}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Visibility="{Binding Items.Count, Converter={StaticResource ZeroToVisible}}"/>
+                </Grid>
+            </Border>
+        </DockPanel>
+
+        <ScrollViewer Grid.Column="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      PanningMode="VerticalOnly"
+                      Focusable="False">
+            <Border Style="{StaticResource Card}" Padding="16" VerticalAlignment="Top">
+                <StackPanel>
+                    <TextBlock Text="Form Jadwal" Style="{StaticResource H2}"/>
+                    <TextBlock Text="Mata Kuliah" Style="{StaticResource LabelText}"/>
+                    <ComboBox ItemsSource="{Binding MataKuliahList}" DisplayMemberPath="Display"
+                              SelectedValuePath="Id" SelectedValue="{Binding MataKuliahId}"/>
+                    <TextBlock Text="Hari" Style="{StaticResource LabelText}"/>
+                    <ComboBox ItemsSource="{Binding HariOptions}" SelectedItem="{Binding Hari}"/>
+                    <TextBlock Text="Waktu Mulai" Style="{StaticResource LabelText}"/>
+                    <ComboBox ItemsSource="{Binding WaktuOptions}" SelectedItem="{Binding WaktuMulai}"/>
+                    <TextBlock Text="Waktu Selesai" Style="{StaticResource LabelText}"/>
+                    <ComboBox ItemsSource="{Binding WaktuOptions}" SelectedItem="{Binding WaktuSelesai}"/>
+                    <TextBlock Text="Ruang" Style="{StaticResource LabelText}"/>
+                    <ComboBox ItemsSource="{Binding RuangOptions}" SelectedItem="{Binding Ruang}"/>
+                    <Button Content="Simpan" Command="{Binding SimpanCommand}" Margin="0,14,0,0"/>
+                    <Button Content="Baru" Command="{Binding BaruCommand}" Style="{StaticResource SecondaryButton}"/>
+                    <Button Content="Hapus" Command="{Binding HapusCommand}" Style="{StaticResource DangerButton}"/>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -1,0 +1,184 @@
+﻿<UserControl x:Class="CampusFlow.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <UniformGrid Columns="4">
+                <Border Style="{StaticResource Card}" Margin="0,0,12,16">
+                    <StackPanel>
+                        <TextBlock Text="Mata Kuliah" Style="{StaticResource MutedText}"/>
+                        <TextBlock Text="{Binding JumlahMataKuliah}" FontSize="30" FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Card}" Margin="0,0,12,16">
+                    <StackPanel>
+                        <TextBlock Text="Jadwal Hari Ini" Style="{StaticResource MutedText}"/>
+                        <TextBlock Text="{Binding JadwalHariIni}" FontSize="30" FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Card}" Margin="0,0,12,16">
+                    <StackPanel>
+                        <TextBlock Text="Tugas Mendatang" Style="{StaticResource MutedText}"/>
+                        <TextBlock Text="{Binding TugasMendatang}" FontSize="30" FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Card}" Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="Kegiatan Mendatang" Style="{StaticResource MutedText}"/>
+                        <TextBlock Text="{Binding KegiatanHariIni}" FontSize="30" FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Progres Tugas" Style="{StaticResource H2}"/>
+                    <ProgressBar Value="{Binding Progres, Mode=OneWay}" Maximum="100"/>
+                    <TextBlock Margin="0,8,0,0" Style="{StaticResource MutedText}">
+                        <Run Text="{Binding TugasSelesai, Mode=OneWay}"/>
+                        <Run Text="dari"/>
+                        <Run Text="{Binding TotalTugas, Mode=OneWay}"/>
+                        <Run Text="tugas selesai"/>
+                        <Run Text="{Binding Progres, Mode=OneWay, StringFormat=({0}%)}"/>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Style="{StaticResource Card}" Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource H2}">
+                            <Run Text="Jadwal Hari Ini"/>
+                            <Run Text="{Binding HariIni, Mode=OneWay}" Foreground="{StaticResource MutedBrush}" FontSize="13"/>
+                        </TextBlock>
+                        <ItemsControl ItemsSource="{Binding JadwalHariIniList}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{StaticResource BgBrush}" CornerRadius="8" Padding="10,8" Margin="0,0,0,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="110"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Waktu}" FontWeight="SemiBold" FontSize="12"
+                                                       Foreground="{StaticResource AccentBrush}"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="{Binding MataKuliahNama}" FontWeight="SemiBold" FontSize="13"/>
+                                                <TextBlock Text="{Binding Ruang}" Style="{StaticResource MutedText}" FontSize="11"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text="Tidak ada jadwal hari ini." Style="{StaticResource MutedText}"
+                                   Visibility="{Binding JadwalHariIniList.Count, Converter={StaticResource ZeroToVisible}}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource Card}" Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Tugas Terdekat" Style="{StaticResource H2}"/>
+                        <ItemsControl ItemsSource="{Binding TugasTerdekat}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{StaticResource BgBrush}" CornerRadius="8" Padding="10,8" Margin="0,0,0,6">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Judul}" FontWeight="SemiBold" FontSize="13"/>
+                                            <Grid Margin="0,4,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Style="{StaticResource MutedText}" FontSize="11">
+                                                    <Run Text="{Binding MataKuliahNama, Mode=OneWay}"/>
+                                                    <Run Text=" - "/>
+                                                    <Run Text="{Binding Deadline, Mode=OneWay, StringFormat=dd MMM yyyy}"/>
+                                                </TextBlock>
+                                                <Border Grid.Column="1" CornerRadius="10" Padding="8,2">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Background" Value="{StaticResource PrioritasRendahBg}"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Prioritas}" Value="Sedang">
+                                                                    <Setter Property="Background" Value="{StaticResource PrioritasSedangBg}"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Prioritas}" Value="Tinggi">
+                                                                    <Setter Property="Background" Value="{StaticResource PrioritasTinggiBg}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <TextBlock Text="{Binding Prioritas}" FontSize="11" FontWeight="SemiBold">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Foreground" Value="{StaticResource PrioritasRendahFg}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Prioritas}" Value="Sedang">
+                                                                        <Setter Property="Foreground" Value="{StaticResource PrioritasSedangFg}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Prioritas}" Value="Tinggi">
+                                                                        <Setter Property="Foreground" Value="{StaticResource PrioritasTinggiFg}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </Border>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text="Tidak ada tugas." Style="{StaticResource MutedText}"
+                                   Visibility="{Binding TugasTerdekat.Count, Converter={StaticResource ZeroToVisible}}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Kegiatan Mendatang" Style="{StaticResource H2}"/>
+                    <ItemsControl ItemsSource="{Binding KegiatanMendatang}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource BgBrush}" CornerRadius="8" Padding="10,8" Margin="0,0,0,6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Tanggal, StringFormat=dd MMM yyyy}" FontWeight="SemiBold" FontSize="12"
+                                                   Foreground="{StaticResource AccentBrush}"/>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="{Binding Judul}" FontWeight="SemiBold" FontSize="13"/>
+                                            <TextBlock Style="{StaticResource MutedText}" FontSize="11">
+                                                <Run Text="{Binding Kategori, Mode=OneWay}"/>
+                                                <Run Text=" - "/>
+                                                <Run Text="{Binding Lokasi, Mode=OneWay}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="Tidak ada kegiatan." Style="{StaticResource MutedText}"
+                               Visibility="{Binding KegiatanMendatang.Count, Converter={StaticResource ZeroToVisible}}"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

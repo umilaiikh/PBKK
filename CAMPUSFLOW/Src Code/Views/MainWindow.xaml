@@ -1,0 +1,54 @@
+﻿<Window x:Class="CampusFlow.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:CampusFlow.ViewModels"
+        xmlns:v="clr-namespace:CampusFlow.Views"
+        Title="CampusFlow" Width="1200" Height="760" MinWidth="960" MinHeight="620"
+        Background="{StaticResource BgBrush}" FontFamily="Segoe UI">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}"><v:DashboardView/></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:JadwalViewModel}"><v:JadwalView/></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TugasViewModel}"><v:TugasView/></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:KalenderViewModel}"><v:KalenderView/></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:KegiatanViewModel}"><v:KegiatanView/></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PengaturanViewModel}"><v:PengaturanView/></DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="232"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Background="{StaticResource NavyBrush}" Padding="14">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="CampusFlow" Foreground="White" FontSize="22" FontWeight="Bold" Margin="8,10,0,2"/>
+                    <TextBlock Text="Manajemen Jadwal &amp; Aktivitas" Foreground="#94A3B8" FontSize="11" Margin="8,0,0,20"/>
+                    <Button Content="Dashboard"        Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="Dashboard"/>
+                    <Button Content="Jadwal Kuliah"    Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="Jadwal"/>
+                    <Button Content="Tugas &amp; Deadline" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="Tugas"/>
+                    <Button Content="Kalender"         Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="Kalender"/>
+                    <Button Content="Kegiatan"         Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="Kegiatan"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Bottom">
+                    <Button Content="Pengaturan" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="Pengaturan"/>
+                </StackPanel>
+                <Grid/>
+            </DockPanel>
+        </Border>
+
+        <DockPanel Grid.Column="1">
+            <Border DockPanel.Dock="Top" Background="{StaticResource SurfaceBrush}"
+                    BorderBrush="{StaticResource LineBrush}" BorderThickness="0,0,0,1" Padding="24,16">
+                <StackPanel>
+                    <TextBlock Text="{Binding CurrentPage}" Style="{StaticResource H1}" Margin="0"/>
+                    <TextBlock Text="{Binding Greeting}" Style="{StaticResource MutedText}"/>
+                </StackPanel>
+            </Border>
+            <ContentControl Content="{Binding CurrentView}" Margin="24"/>
+        </DockPanel>
+    </Grid>
+</Window>
