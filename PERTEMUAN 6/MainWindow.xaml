@@ -1,0 +1,253 @@
+<Window x:Class="StudentRegistrationApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Student Registration"
+        Height="780" Width="1120" MinHeight="680" MinWidth="950"
+        WindowStartupLocation="CenterScreen"
+        Background="#F4F6F9">
+
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="Margin" Value="0,5,14,10"/>
+            <Setter Property="BorderBrush" Value="#CBD5E1"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Margin" Value="0,5,14,10"/>
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Margin" Value="0,5,14,10"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="26">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,18">
+            <TextBlock Text="STUDENT REGISTRATION"
+                       FontSize="28" FontWeight="Bold"
+                       Foreground="#1F2937"/>
+            <TextBlock Text="Student Information Management"
+                       FontSize="14" Foreground="#64748B"
+                       Margin="0,4,0,0"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Background="#FFFFFF"
+                CornerRadius="12" Padding="20"
+                Margin="0,0,0,16"
+                BorderBrush="#E2E8F0" BorderThickness="1">
+
+            <StackPanel>
+                <TextBlock Text="Student Information"
+                           FontSize="19" FontWeight="Bold"
+                           Foreground="#1F2937"
+                           Margin="0,0,0,12"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1.4*"/>
+                        <ColumnDefinition Width="1.2*"/>
+                        <ColumnDefinition Width="1.2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <TextBlock Text="NIM" FontWeight="SemiBold"
+                                   Foreground="#374151"/>
+                        <TextBox x:Name="txtNim"
+                                 ToolTip="Masukkan NIM"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="0" Grid.Column="1">
+                        <TextBlock Text="Nama Mahasiswa"
+                                   FontWeight="SemiBold"
+                                   Foreground="#374151"/>
+                        <TextBox x:Name="txtNama"
+                                 ToolTip="Masukkan nama mahasiswa"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="0" Grid.Column="2">
+                        <TextBlock Text="Program Studi"
+                                   FontWeight="SemiBold"
+                                   Foreground="#374151"/>
+                        <ComboBox x:Name="cmbProdi"
+                                  DisplayMemberPath="ProgramName"
+                                  SelectedValuePath="ProgramId"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="0" Grid.Column="3">
+                        <TextBlock Text="Jenis Kelamin"
+                                   FontWeight="SemiBold"
+                                   Foreground="#374151"/>
+                        <ComboBox x:Name="cmbGender">
+                            <ComboBoxItem Content="Laki-laki"/>
+                            <ComboBoxItem Content="Perempuan"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="0">
+                        <TextBlock Text="Tanggal Lahir"
+                                   FontWeight="SemiBold"
+                                   Foreground="#374151"/>
+                        <DatePicker x:Name="dpBirthDate"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <TextBlock Text="Nomor Telepon"
+                                   FontWeight="SemiBold"
+                                   Foreground="#374151"/>
+                        <TextBox x:Name="txtPhone"
+                                 ToolTip="Masukkan nomor telepon"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="2"
+                                Grid.ColumnSpan="2">
+                        <TextBlock Text="Alamat"
+                                   FontWeight="SemiBold"
+                                   Foreground="#374151"/>
+                        <TextBox x:Name="txtAddress"
+                                 ToolTip="Masukkan alamat"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="4"
+                                Orientation="Horizontal"
+                                Margin="0,6,0,0">
+                        <Button Content="Simpan Data"
+                                Background="#2563EB"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Click="BtnSimpan_Click"/>
+
+                        <Button Content="Ubah Data"
+                                Background="#0F766E"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Click="BtnUbah_Click"/>
+
+                        <Button Content="Hapus Data"
+                                Background="#DC2626"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Click="BtnHapus_Click"/>
+
+                        <Button Content="Reset"
+                                Background="#E2E8F0"
+                                Foreground="#1F2937"
+                                BorderThickness="0"
+                                Click="BtnReset_Click"/>
+
+                        <Button Content="Muat Ulang"
+                                Background="#475569"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Click="BtnRefresh_Click"/>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock x:Name="txtStatus"
+                           Text="Memuat data..."
+                           FontSize="12"
+                           Foreground="#64748B"
+                           Margin="0,8,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" Background="#FFFFFF"
+                CornerRadius="12" Padding="16"
+                BorderBrush="#E2E8F0" BorderThickness="1">
+
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top"
+                            Margin="0,0,0,12">
+                    <TextBlock Text="Data Mahasiswa"
+                               FontSize="19" FontWeight="Bold"
+                               Foreground="#1F2937"/>
+                    <TextBlock
+                        Text="Pilih satu baris pada tabel untuk mengubah atau menghapus data."
+                        FontSize="12" Foreground="#64748B"
+                        Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <DataGrid x:Name="gridMahasiswa"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          SelectionUnit="FullRow"
+                          CanUserAddRows="False"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          AlternatingRowBackground="#F8FAFC"
+                          SelectionChanged="GridMahasiswa_SelectionChanged">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Header="ID"
+                            Binding="{Binding StudentId}"
+                            Width="55"/>
+
+                        <DataGridTextColumn
+                            Header="NIM"
+                            Binding="{Binding NIM}"
+                            Width="110"/>
+
+                        <DataGridTextColumn
+                            Header="Nama"
+                            Binding="{Binding Name}"
+                            Width="1.3*"/>
+
+                        <DataGridTextColumn
+                            Header="Program Studi"
+                            Binding="{Binding ProgramName}"
+                            Width="1.3*"/>
+
+                        <DataGridTextColumn
+                            Header="Jenis Kelamin"
+                            Binding="{Binding Gender}"
+                            Width="110"/>
+
+                        <DataGridTextColumn
+                            Header="Tanggal Lahir"
+                            Binding="{Binding BirthDate, StringFormat={}{0:dd-MM-yyyy}}"
+                            Width="115"/>
+
+                        <DataGridTextColumn
+                            Header="Telepon"
+                            Binding="{Binding PhoneNumber}"
+                            Width="120"/>
+
+                        <DataGridTextColumn
+                            Header="Alamat"
+                            Binding="{Binding Address}"
+                            Width="1.5*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>
