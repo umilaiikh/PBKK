@@ -1,0 +1,9 @@
+<div class="row justify-content-center"><div class="col-lg-8"><div class="card border-0 shadow-sm rounded-4"><div class="card-body p-4"><h3><?= esc($title) ?></h3>
+<form method="post" enctype="multipart/form-data" action="/admin/products/save"><?= csrf_field() ?><input type="hidden" name="id" value="<?= esc($product['id']??'') ?>">
+<div class="mb-3"><label class="form-label">Nama produk</label><input class="form-control" name="name" required value="<?= esc($product['name']??'') ?>"></div>
+<div class="mb-3"><label class="form-label">Kategori</label><select class="form-select" name="category_id" required><?php foreach($categories as $c): ?><option value="<?= $c['id'] ?>" <?= (string)($product['category_id']??'')===(string)$c['id']?'selected':'' ?>><?= esc($c['name']) ?></option><?php endforeach ?></select></div>
+<div class="mb-3"><label class="form-label">Deskripsi</label><textarea class="form-control" name="description"><?= esc($product['description']??'') ?></textarea></div>
+<div class="row"><div class="col-md-6 mb-3"><label class="form-label">Harga</label><input class="form-control" type="number" min="0" name="price" required value="<?= esc($product['price']??'0') ?>"></div><div class="col-md-6 mb-3"><label class="form-label">Stok</label><input class="form-control" type="number" min="0" name="stock" required value="<?= esc($product['stock']??'0') ?>"></div></div>
+<div class="mb-3"><label class="form-label">Gambar (JPG/PNG/WebP maks 2 MB)</label><input class="form-control" type="file" name="image" accept=".jpg,.jpeg,.png,.webp"></div>
+<div class="mb-3"><label class="form-label">Status</label><select class="form-select" name="status"><option value="active">Aktif</option><option value="inactive" <?= ($product['status']??'')==='inactive'?'selected':'' ?>>Nonaktif</option></select></div>
+<button class="btn btn-shop">Simpan</button> <a class="btn btn-outline-secondary" href="/admin/products">Kembali</a></form></div></div></div></div>

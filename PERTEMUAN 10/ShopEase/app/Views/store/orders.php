@@ -1,0 +1,3 @@
+<h3 class="mb-3">Riwayat Pesanan</h3><div class="card border-0 shadow-sm rounded-4"><div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>No. Pesanan</th><th>Tanggal</th><th>Total</th><th>Status</th><th></th></tr></thead><tbody>
+<?php foreach($orders as $o): ?><tr><td><?= esc($o['order_number']) ?></td><td><?= esc($o['order_date']) ?></td><td>Rp <?= number_format($o['total'],0,',','.') ?></td><td><span class="badge text-bg-secondary"><?= esc($o['order_status']) ?></span></td><td><a class="btn btn-sm btn-outline-success" href="/orders/<?= $o['id'] ?>">Detail</a></td></tr><?php endforeach ?>
+<?php if(!$orders): ?><tr><td colspan="5" class="text-center py-4">Belum ada pesanan.</td></tr><?php endif ?></tbody></table></div></div>
