@@ -1,0 +1,13 @@
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div><h2 class="mb-1">Kelola Produk</h2><p class="text-muted mb-0">Tambah, ubah, cari, dan kelola stok produk ShopEase.</p></div>
+    <a href="<?= base_url('admin/products/create') ?>" class="btn btn-shop">+ Tambah Produk</a>
+</div>
+<form class="card border-0 shadow-sm rounded-4 p-3 mb-4" method="get">
+    <div class="row g-2"><div class="col-md-6"><input class="form-control" name="q" value="<?= esc($keyword) ?>" placeholder="Cari nama produk..."></div>
+    <div class="col-md-4"><select class="form-select" name="category"><option value="">Semua kategori</option><?php foreach ($categories as $cat): ?><option value="<?= $cat['id'] ?>" <?= (string)$selectedCategory === (string)$cat['id'] ? 'selected' : '' ?>><?= esc($cat['name']) ?></option><?php endforeach ?></select></div>
+    <div class="col-md-2 d-grid"><button class="btn btn-outline-success">Filter</button></div></div>
+</form>
+<div class="card border-0 shadow-sm rounded-4"><div class="table-responsive"><table class="table align-middle mb-0"><thead class="table-light"><tr><th>Produk</th><th>Kategori</th><th>Harga</th><th>Stok</th><th>Status</th><th class="text-end">Aksi</th></tr></thead><tbody>
+<?php if (!$products): ?><tr><td colspan="6" class="text-center text-muted py-4">Belum ada data produk.</td></tr><?php endif ?>
+<?php foreach ($products as $p): ?><tr><td><div class="d-flex align-items-center gap-3"><?php if (!empty($p['image'])): ?><img src="<?= base_url('uploads/products/' . $p['image']) ?>" alt="" style="width:56px;height:56px;object-fit:cover;border-radius:12px"><?php else: ?><div class="rounded-3 bg-light d-flex align-items-center justify-content-center" style="width:56px;height:56px">📦</div><?php endif ?><div><strong><?= esc($p['name']) ?></strong><div class="small text-muted">#<?= $p['id'] ?></div></div></div></td><td><?= esc($p['category_name']) ?></td><td>Rp <?= number_format((float)$p['price'], 0, ',', '.') ?></td><td><?= (int)$p['stock'] ?></td><td><span class="badge <?= $p['status'] === 'active' ? 'text-bg-success' : 'text-bg-secondary' ?>"><?= $p['status'] === 'active' ? 'Aktif' : 'Nonaktif' ?></span></td><td class="text-end"><a class="btn btn-sm btn-outline-success" href="<?= base_url('admin/products/edit/' . $p['id']) ?>">Edit</a> <?php if ($p['status'] === 'active'): ?><form class="d-inline" method="post" action="<?= base_url('admin/products/delete/' . $p['id']) ?>" onsubmit="return confirm('Nonaktifkan produk ini?')"><?= csrf_field() ?><button class="btn btn-sm btn-outline-danger">Nonaktifkan</button></form><?php endif ?></td></tr><?php endforeach ?>
+</tbody></table></div></div>

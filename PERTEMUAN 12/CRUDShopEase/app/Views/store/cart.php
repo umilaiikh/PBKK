@@ -1,0 +1,7 @@
+<h3 class="mb-3">Keranjang Belanja</h3>
+<?php $total=0; foreach($items as $i) $total += $i['subtotal']; ?>
+<div class="card border-0 shadow-sm rounded-4"><div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Produk</th><th>Harga</th><th>Jumlah</th><th>Subtotal</th><th></th></tr></thead><tbody>
+<?php foreach($items as $i): ?><tr><td><?= esc($i['name']) ?></td><td>Rp <?= number_format($i['price'],0,',','.') ?></td><td><form class="d-flex gap-2" method="post" action="/cart/update/<?= $i['id'] ?>"><?= csrf_field() ?><input class="form-control form-control-sm" style="width:75px" type="number" name="quantity" min="1" max="<?= $i['stock'] ?>" value="<?= $i['quantity'] ?>"><button class="btn btn-sm btn-outline-success">Ubah</button></form></td><td>Rp <?= number_format($i['subtotal'],0,',','.') ?></td><td><form method="post" action="/cart/remove/<?= $i['id'] ?>"><?= csrf_field() ?><button class="btn btn-sm btn-outline-danger">Hapus</button></form></td></tr><?php endforeach ?>
+<?php if(!$items): ?><tr><td colspan="5" class="text-center py-4">Keranjang masih kosong.</td></tr><?php endif ?>
+</tbody></table></div></div>
+<div class="d-flex justify-content-between align-items-center mt-3"><a href="/products" class="btn btn-outline-secondary">Lanjut belanja</a><div class="text-end"><h5>Total: Rp <?= number_format($total,0,',','.') ?></h5><?php if($items): ?><a href="/checkout" class="btn btn-shop">Lanjut checkout</a><?php endif ?></div></div>
